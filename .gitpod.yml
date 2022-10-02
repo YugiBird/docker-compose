@@ -3,13 +3,25 @@
 # and commit this file to your remote git repository to share the goodness with others.
 #
 
-ports:
-- port: 8080
-
+# Commands to start on workspace startup
 tasks:
-- init: make
-- command: docker-compose -f docker-compose-cass-es.yml up
-- command: alias tctl="docker exec temporal-admin-tools tctl"
-- command: tctl --namespace default namespace update --has enabled
-- command: tctl --namespace default namespace update -vas enabled
+  - name: Terminal 1 
+    before: echo 'before script' 
+    init: echo 'init cassandra & elastic-search engine' 
+    command: docker-compose -f docker-compose-cass-es.yml up
+  - name: Terminal 2 
+    init: echo 'tctl'
+    command: alias tctl="docker exec temporal-admin-tools tctl"
+  - name: Terminal 3 
+    init: echo 'enable history archival' 
+    command: tctl --namespace default namespace update --has enabled
+  - name: Terminal 4 
+    init: echo 'enable visibility archival' 
+    command: tctl --namespace default namespace update -vas enabled
 
+# Ports to expose on workspace startup
+ports:
+  - name: Web App
+    description: The main application web server
+    port: 8080
+    onOpen: open-browser
