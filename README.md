@@ -6,6 +6,13 @@ Every major or minor release of the Temporal Server has a corresponding docker-c
 
 Alongside the docker compose files you can find Kubernetes manifests suitable for setting up a development version of Temporal in a Kubernetes cluster. These files can be found in [k8s](./k8s) directory, each directory holds the manifests related to one of the docker compose files. Details of using these manifests can be found in [KUBERNETES](./KUBERNETES.md).
 
+<a href="https://gitpod.io/#<your-repository-url>">
+  <img
+    src="https://img.shields.io/badge/Contribute%20with-Gitpod-908a85?logo=gitpod"
+    alt="Contribute with Gitpod"
+  />
+</a>
+
 ## Prerequisites
 
 To use these files, you must first have the following installed:
