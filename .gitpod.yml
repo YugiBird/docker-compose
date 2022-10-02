@@ -6,31 +6,18 @@
 # Commands to start on workspace startup
 tasks:
   - name: Terminal 1 
-    init: >
-      echo 'init cassandra & elastic-search engine' &&
-      gp sync-done terminal-1
-    command: docker-compose -f docker-compose-cass-es.yml up
-
-  - name: Terminal 2 
-    init: >
-      gp sync-await terminal-1 &&
-      echo 'tctl' &&
-      gp sync-done terminal-2
-    command: alias tctl="docker exec temporal-admin-tools tctl"
-
-  - name: Terminal 3 
-    init: >
-      gp sync-await terminal-2 &&
+    init: |
+      echo 'init cassandra & elastic-search engine'
+      docker-compose -f docker-compose-cass-es.yml up
+      gp ports await 8080
+      echo 'tctl'
+      alias tctl="docker exec temporal-admin-tools tctl"
       echo 'enable history archival'
-      gp sync-done terminal-3 
-    command: tctl --namespace default namespace update --has enabled
-
-  - name: Terminal 4 
-    init: >
-      gp sync-await terminal-3 &&
-      echo 'enable visibility archival' 
-    command: tctl --namespace default namespace update -vas enabled
-
+      tctl --namespace default namespace update --has enabled
+      echo 'enable visibility archival'
+      tctl --namespace default namespace update -vas enabled
+    command: gp sync-done terminal-1
+ 
 # Ports to expose on workspace startup
 ports:
   - name: Web App
