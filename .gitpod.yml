@@ -7,8 +7,8 @@
 tasks:
   - name: Terminal 1 
     before: |
-      echo 'compose docker workspace'
-      docker-compose up
+      echo 'init cassandra & elastic-search engine'
+      docker-compose -f docker-compose-cass-es.yml up 
     init: |
       echo 'tctl'
       alias tctl="docker exec temporal-admin-tools tctl"
@@ -16,8 +16,7 @@ tasks:
       tctl --namespace default namespace update --has enabled
       echo 'enable visibility archival'
       tctl --namespace default namespace update -vas enabled
-#echo 'init cassandra & elastic-search engine'
-#docker-compose -f docker-compose-cass-es.yml up   
+  
 # Ports to expose on workspace startup
     command: | 
       ports: 
