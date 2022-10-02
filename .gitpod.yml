@@ -9,15 +9,13 @@ tasks:
     init: |
       echo 'init cassandra & elastic-search engine'
       docker-compose -f docker-compose-cass-es.yml up
-      gp ports await 8080
       echo 'tctl'
       alias tctl="docker exec temporal-admin-tools tctl"
       echo 'enable history archival'
       tctl --namespace default namespace update --has enabled
       echo 'enable visibility archival'
       tctl --namespace default namespace update -vas enabled
-    command: gp sync-done terminal-1
- 
+
 # Ports to expose on workspace startup
 ports:
   - name: Web App
